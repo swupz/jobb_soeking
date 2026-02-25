@@ -9,7 +9,7 @@ Claude will use this as inspiration — not as a template to copy word for word.
 
 ## Tone and style preferences
 
-- Start the cover letter by saying "This cover letter is made by AI".
+- Start the cover letter by saying "TThis cover letter is created with my AI project.".
 - Down to earth, human interest, ambitious, eager.
 - Avoid: "I am writing to express my interest in..."
 - Avoid corporate buzzwords: "leverage", "synergy", "passionate about"
