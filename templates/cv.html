@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="{{ 'no' if cv.language == 'NO' else 'en' }}">
+<head>
+  <meta charset="UTF-8">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: -apple-system, "Helvetica Neue", Arial, sans-serif;
+      font-size: 10pt;
+      line-height: 1.5;
+      color: #1a1a1a;
+      background: white;
+    }
+
+    .page {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 48px 48px 64px;
+    }
+
+    /* ── Header ── */
+    header {
+      border-bottom: 2px solid #1a1a1a;
+      padding-bottom: 16px;
+      margin-bottom: 24px;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .header-text { flex: 1; }
+
+    .header-photo {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      object-fit: cover;
+      flex-shrink: 0;
+    }
+
+    header h1 {
+      font-size: 22pt;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      color: #1a1a1a;
+    }
+
+    .contact-line {
+      margin-top: 6px;
+      font-size: 9pt;
+      color: #555;
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .contact-line a {
+      color: #2563eb;
+      text-decoration: none;
+    }
+
+    /* ── Section ── */
+    section {
+      margin-bottom: 22px;
+    }
+
+    h2 {
+      font-size: 9pt;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1.2px;
+      color: #6b7280;
+      border-bottom: 1px solid #e5e7eb;
+      padding-bottom: 4px;
+      margin-bottom: 12px;
+    }
+
+    /* ── Summary ── */
+    .summary p {
+      font-size: 10pt;
+      color: #374151;
+      line-height: 1.6;
+    }
+
+    /* ── Experience ── */
+    .entry {
+      margin-bottom: 14px;
+    }
+
+    .entry-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+    }
+
+    .entry-title {
+      font-weight: 600;
+      font-size: 10.5pt;
+    }
+
+    .entry-company {
+      font-size: 9.5pt;
+      color: #4b5563;
+    }
+
+    .entry-period {
+      font-size: 9pt;
+      color: #9ca3af;
+      white-space: nowrap;
+    }
+
+    .entry ul {
+      margin-top: 4px;
+      padding-left: 16px;
+    }
+
+    .entry ul li {
+      font-size: 9.5pt;
+      color: #374151;
+      margin-bottom: 2px;
+    }
+
+    /* ── Education ── */
+    .edu-entry {
+      margin-bottom: 10px;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .edu-main .degree {
+      font-weight: 600;
+      font-size: 10pt;
+    }
+
+    .edu-main .institution {
+      font-size: 9.5pt;
+      color: #4b5563;
+    }
+
+    .edu-period {
+      font-size: 9pt;
+      color: #9ca3af;
+      white-space: nowrap;
+    }
+
+    /* ── Skills ── */
+    .skill-group {
+      margin-bottom: 6px;
+      font-size: 9.5pt;
+    }
+
+    .skill-category {
+      font-weight: 600;
+      color: #374151;
+      display: inline;
+    }
+
+    .skill-names {
+      color: #4b5563;
+      display: inline;
+    }
+
+    /* ── Interests ── */
+    .interests p {
+      font-size: 9.5pt;
+      color: #4b5563;
+    }
+  </style>
+</head>
+<body>
+<div class="page">
+
+  <header>
+    <div class="header-text">
+    <h1>{{ cv.name }}</h1>
+    <div class="contact-line">
+      {% if cv.email %}<span>{{ cv.email }}</span>{% endif %}
+      {% if cv.phone %}<span>{{ cv.phone }}</span>{% endif %}
+      {% if cv.location %}<span>{{ cv.location }}</span>{% endif %}
+      {% if cv.linkedin_url %}<a href="{{ cv.linkedin_url }}">LinkedIn</a>{% endif %}
+      {% if cv.github_url %}<a href="{{ cv.github_url }}">GitHub</a>{% endif %}
+    </div>
+    </div>
+    {% if photo %}<img class="header-photo" src="{{ photo }}" alt="Profile photo">{% endif %}
+  </header>
+
+  {% if cv.summary %}
+  <section class="summary">
+    <h2>{{ 'Profil' if cv.language == 'NO' else 'Profile' }}</h2>
+    <p>{{ cv.summary }}</p>
+  </section>
+  {% endif %}
+
+  {% if cv.experiences %}
+  <section>
+    <h2>{{ 'Erfaring' if cv.language == 'NO' else 'Experience' }}</h2>
+    {% for exp in cv.experiences %}
+    <div class="entry">
+      <div class="entry-header">
+        <div>
+          <span class="entry-title">{{ exp.title }}</span>
+          <span class="entry-company"> · {{ exp.company }}</span>
+        </div>
+        <span class="entry-period">{{ exp.period }}</span>
+      </div>
+      {% if exp.bullets %}
+      <ul>
+        {% for bullet in exp.bullets %}
+        <li>{{ bullet }}</li>
+        {% endfor %}
+      </ul>
+      {% endif %}
+    </div>
+    {% endfor %}
+  </section>
+  {% endif %}
+
+  {% if cv.educations %}
+  <section>
+    <h2>{{ 'Utdanning' if cv.language == 'NO' else 'Education' }}</h2>
+    {% for edu in cv.educations %}
+    <div class="edu-entry">
+      <div class="edu-main">
+        <div class="degree">
+          {{ edu.degree }}{% if edu.field %}, {{ edu.field }}{% endif %}
+        </div>
+        <div class="institution">{{ edu.institution }}</div>
+      </div>
+      <div class="edu-period">{{ edu.period }}</div>
+    </div>
+    {% endfor %}
+  </section>
+  {% endif %}
+
+  {% if cv.skills %}
+  <section>
+    <h2>{{ 'Kompetanse' if cv.language == 'NO' else 'Skills' }}</h2>
+    {% for group in cv.skills %}
+    <div class="skill-group">
+      <span class="skill-category">{{ group.category }}:</span>
+      <span class="skill-names"> {{ group.names | join(', ') }}</span>
+    </div>
+    {% endfor %}
+  </section>
+  {% endif %}
+
+  {% if cv.interests %}
+  <section class="interests">
+    <h2>{{ 'Interesser' if cv.language == 'NO' else 'Interests' }}</h2>
+    <p>{{ cv.interests }}</p>
+  </section>
+  {% endif %}
+
+</div>
+</body>
+</html>

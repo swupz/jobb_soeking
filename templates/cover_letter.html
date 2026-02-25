@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="{{ 'no' if language == 'NO' else 'en' }}">
+<head>
+  <meta charset="UTF-8">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: -apple-system, "Helvetica Neue", Arial, sans-serif;
+      font-size: 11pt;
+      line-height: 1.7;
+      color: #1a1a1a;
+      background: white;
+    }
+
+    .page {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 64px 48px 80px;
+    }
+
+    .sender {
+      margin-bottom: 40px;
+    }
+
+    .sender .name {
+      font-size: 13pt;
+      font-weight: 700;
+    }
+
+    .sender .meta {
+      font-size: 9.5pt;
+      color: #6b7280;
+      margin-top: 4px;
+    }
+
+    .meta a {
+      color: #2563eb;
+      text-decoration: none;
+    }
+
+    .recipient {
+      margin-bottom: 32px;
+      font-size: 10pt;
+      color: #374151;
+    }
+
+    .recipient .company {
+      font-weight: 600;
+      font-size: 11pt;
+      color: #1a1a1a;
+    }
+
+    .body p {
+      margin-bottom: 16px;
+      color: #1a1a1a;
+    }
+
+    .closing {
+      margin-top: 40px;
+      font-size: 10.5pt;
+    }
+
+    .closing .regards {
+      margin-bottom: 32px;
+      color: #374151;
+    }
+
+    .closing .signature {
+      font-weight: 700;
+      font-size: 11pt;
+    }
+  </style>
+</head>
+<body>
+<div class="page">
+
+  <div class="sender">
+    <div class="name">{{ name }}</div>
+    <div class="meta">
+      {{ email }}
+      {% if phone %} · {{ phone }}{% endif %}
+      {% if location %} · {{ location }}{% endif %}
+      {% if linkedin_url %} · <a href="{{ linkedin_url }}">LinkedIn</a>{% endif %}
+    </div>
+  </div>
+
+  <div class="recipient">
+    <div class="company">{{ job_company }}</div>
+    <div>{{ job_title }}</div>
+  </div>
+
+  <div class="body">
+    {% for paragraph in paragraphs %}
+    <p>{{ paragraph }}</p>
+    {% endfor %}
+  </div>
+
+  <div class="closing">
+    <div class="regards">
+      {{ 'Med vennlig hilsen,' if language == 'NO' else 'Kind regards,' }}
+    </div>
+    <div class="signature">{{ name }}</div>
+  </div>
+
+</div>
+</body>
+</html>
